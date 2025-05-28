@@ -19,18 +19,28 @@ ChronosCraft AI is a web application where users co-create beautiful, personaliz
 
 For detailed technical and product documentation, see the respective `README.md` files in each subdirectory.
 
-> **Directory Structure**
->
-> - `.devcontainer/` – Only for dev environment setup
-> - `client/` – See above
-> - `docs/` – For all product, technical, and process documentation
-> - `infra/` – For infrastructure-as-code (IaC) or deployment configs
-> - `scripts/` – For automation scripts (setup, lint, test, deploy, etc.)
-> - `server/` – See above
->
-> **Development Environment**
->
-> This project uses a dev container with Node.js, npm, and ESLint pre-installed. Manual installation of these tools is not required. Focus on configuration and project-specific setup.
+## Quick Start
+
+1. Set up your development environment (see `docs/CONFIGURATION.md`)
+2. Install dependencies for both client and server
+3. Start the development servers
+
+## Documentation
+
+- 📚 `docs/CONFIGURATION.md` - Setup and configuration guide
+- 🔧 `docs/API.md` - API documentation and endpoints
+- 👥 `docs/CONTRIBUTING.md` - Development workflow and guidelines
+- 📝 `docs/CHANGELOG.md` - Version history and changes
+
+## Project Structure
+
+```
+client/      # Next.js frontend
+server/      # Express backend
+docs/        # Project documentation
+```
+
+For detailed configuration and setup instructions, see `docs/CONFIGURATION.md`.
 
 ## Technology Vibe
 
@@ -55,12 +65,27 @@ For detailed technical and product documentation, see the respective `README.md`
 - Do not commit secrets or sensitive values to the repository.
 - See `CONTRIBUTING.md` for more details on environment variable management.
 
-## Quick Start
+## Integration Testing with start-dev.sh
 
-This project is designed for development in a containerized environment (see Dev Containers).
+To run full integration (end-to-end) tests across both backend and frontend, use the `start-dev.sh` script in the project root. This script:
 
-1. Open in VS Code with the Dev Containers extension.
-2. See [`client/README.md`](./client/README.md) and [`server/README.md`](./server/README.md) for setup and contribution details.
+- Ensures ports 3000 (frontend) and 5000 (backend) are free
+- Starts the backend and waits for it to be ready
+- Starts the frontend and waits for it to be ready
+- Runs Playwright integration tests (real browser automation)
+- Shuts down both servers after tests complete
+
+**Usage:**
+
+```zsh
+./start-dev.sh
+```
+
+This is the recommended way to verify backend/frontend integration and run Playwright tests locally or in CI.
+
+- The `start-dev.sh` script now uses a robust HTTP check for frontend readiness.
+- Playwright integration tests require the frontend to be accessible at http://localhost:3000.
+- If you see HTTP ERROR 502, ensure the frontend server is running and port 3000 is public in Codespaces.
 
 ---
 

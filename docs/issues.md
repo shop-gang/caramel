@@ -1,5 +1,20 @@
 # ChronosCraft AI Issues Log
 
+> **Note:** This file is now maintained in `/docs/addenda/issues.md`. For the main project vision, MVP, and actionable tasks, see `ROADMAP.md`, `MVP_CHECKLIST.md`, and `NEXT_STEPS.md` in the docs root.
+
+---
+
+## [2025-05-28] HTTP ERROR 502 on Frontend
+
+- **Description:** When accessing the frontend (e.g., via Codespaces URL), a 502 Bad Gateway error is shown.
+- **Context:** This typically means the frontend server is not running, not accessible, or port 3000 is not public in Codespaces.
+- **Troubleshooting:**
+  - Ensure `client` server is running (`npm run dev` in `client/`)
+  - Check Codespaces port forwarding (port 3000 must be public)
+  - Review server logs for errors
+  - Confirm no port conflicts
+- **Status:** Ongoing
+
 ## Next.js Development Server Access Issue (2025-05-24)
 
 ### 1. Error Description:
@@ -130,6 +145,57 @@ For detailed configuration notes, see:
 
 ### 3. Technical Debt:
 
-- Need to expand test coverage
-- API documentation needed
-- TypeScript migration for backend endpoints
+- TypeScript migration for backend endpoints (core server and routes migrated as of 2025-05-28; review other modules ongoing)
+- Review and expand test coverage for all modules (in progress)
+- Audit and update documentation for all APIs and modules (in progress)
+
+> **Note (2025-05-28):**
+> Backend server entrypoint and routes (index, users, app, www) migrated to TypeScript. Calendar API and main server logic now TypeScript-based. Reviewing other modules for further migration and coverage.
+
+## Server Startup Issue (2025-05-27)
+
+### 1. Error Description:
+
+Backend server fails to start with MODULE_NOT_FOUND error when attempting to run with `ts-node ./bin/www` or `npm run dev`.
+
+### 2. Steps to Reproduce:
+
+1. Navigate to server directory
+2. Run `npm run dev` or `npx ts-node ./bin/www`
+3. Receive error: "Cannot find module './www'"
+
+### 3. Current Status:
+
+- Issue identified and documented
+- Temporary workaround: Use frontend independently while backend fix is pending
+- To be resolved in next development session
+
+### 4. Notes/Context:
+
+- Error suggests possible path resolution issue with ts-node and project structure
+- May be related to the nested server directory structure
+- Priority: High (blocks backend development and testing)
+
+## Calendar Month Selection UI Issue (2025-05-27)
+
+### 1. Error Description:
+
+When attempting to select multiple months in the calendar creation interface, only January remains selected regardless of other month selections.
+
+### 2. Steps to Reproduce:
+
+1. Access the calendar creation interface
+2. Attempt to select multiple months
+3. Observe that only January remains selected, while other month selections are not persisted
+
+### 3. Current Status:
+
+- Issue identified during frontend testing
+- Affects the month selection functionality in CalendarCreator component
+- Priority: High (impacts core calendar creation functionality)
+
+### 4. Notes/Context:
+
+- Likely related to state management in the CalendarCreator component
+- May indicate issues with the month selection state persistence
+- To be investigated in the frontend components, particularly CalendarCreator.tsx
